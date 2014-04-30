@@ -6,6 +6,8 @@ public class TennisGame {
     private int m_score2 = 0;
     private String player1Name;
     private String player2Name;
+    private int tempScore=0;
+    private String score = "";
 
     public TennisGame(String player1Name, String player2Name) {
         this.player1Name = player1Name;
@@ -13,17 +15,13 @@ public class TennisGame {
     }
 
     public void wonPoint(String playerName) {
-        if (playerName == "player1")
+        if ("player1".equals(playerName))
             m_score1 += 1;
         else
             m_score2 += 1;
     }
-
-    public String getScore() {
-        String score = "";
-        int tempScore=0;
-        if (m_score1==m_score2)
-        {
+     public String getScoreIfBothSame(){
+         {
             switch (m_score1)
             {
                 case 0:
@@ -44,7 +42,9 @@ public class TennisGame {
                 
             }
         }
-        else if (m_score1>=4 || m_score2>=4)
+        return score;
+      }
+      public String getScoreIfOneHasScoredMoreThan4(){
         {
             int minusResult = m_score1-m_score2;
             if (minusResult==1) score ="Advantage player1";
@@ -52,8 +52,11 @@ public class TennisGame {
             else if (minusResult>=2) score = "Win for player1";
             else score ="Win for player2";
         }
-        else
-        {
+      return score;
+      }
+      
+      public String getScoreInOtherCases(){
+          
             for (int i=1; i<3; i++)
             {
                 if (i==1) tempScore = m_score1;
@@ -74,7 +77,14 @@ public class TennisGame {
                         break;
                 }
             }
-        }
-        return score;
-    }
+        
+          return score;
+      }
+
+    public String getScore() {
+        if (m_score1==m_score2){return getScoreIfBothSame();}
+        else if(m_score1>=4 || m_score2>=4){return getScoreIfOneHasScoredMoreThan4();}
+        else{return getScoreInOtherCases();}
+     }
+     
 }
